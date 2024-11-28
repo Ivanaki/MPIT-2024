@@ -64,7 +64,7 @@ namespace StarterAssets
 		private PlayerInput _playerInput;
 		private CharacterController _controller;
 		private StarterAssetsInputs _input;
-		private GameObject _mainCamera;
+		//private GameObject _mainCamera;
 
 		private const float _threshold = 0.01f;
 
@@ -79,10 +79,10 @@ namespace StarterAssets
 		private void Awake()
 		{
 			// get a reference to our main camera
-			if (_mainCamera == null)
-			{
-				_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-			}
+			//if (_mainCamera == null)
+			//{
+			//	_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+			//}
 		}
 
 		private void Start()

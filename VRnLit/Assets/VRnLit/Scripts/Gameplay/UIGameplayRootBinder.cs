@@ -10,11 +10,13 @@ namespace PogruzhickURP.Scripts.Gameplay.Root
         public void Bind(Subject<Unit> exitToResultsSignalSubj)
         {
             _exitToResultsSignalSubj = exitToResultsSignalSubj;
+           //print("bind UIGameplayRootBinder");
         }
         
         public void HandleGoToResultButtonClick()
         {
-            _exitToResultsSignalSubj?.OnNext(Unit.Default);
+            //print("Go to result button clicked");
+            _exitToResultsSignalSubj.OnNext(Unit.Default);
         }
     }
 }

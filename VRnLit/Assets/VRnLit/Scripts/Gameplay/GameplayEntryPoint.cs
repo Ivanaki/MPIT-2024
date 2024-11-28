@@ -17,7 +17,7 @@ namespace VRnLit.Scripts.Gameplay
             var player = FindFirstObjectByType<MyPlayer>();
             
             _firstPerson.SetActive(!enterParams.IsVR);
-            player.gameObject.SetActive(enterParams.IsVR);
+            //player.gameObject.SetActive(enterParams.IsVR);
 
             var exitToResultsSignalSubj = new Subject<Unit>();
             _binder.Bind(exitToResultsSignalSubj);
