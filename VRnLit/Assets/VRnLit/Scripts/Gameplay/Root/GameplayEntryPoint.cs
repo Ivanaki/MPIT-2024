@@ -13,28 +13,30 @@ namespace VRnLit.Scripts.Gameplay
         [SerializeField] private UIGameplayRootBinder _binder;
         [SerializeField] private GameObject _firstPerson;
         
+        private MyPlayer _player;
+        
         public Observable<Unit> Run(DIContainer gameplayContainer, GameplayEnterParams enterParams)
         {
             //var cursorLocker = gameplayContainer.Resolve<CursorLocker>();
-            MyPlayer myPlayer = null;
             
-            if (enterParams.IsVR)
+            if (SteamVR.active)
             {
-                myPlayer = FindFirstObjectByType<MyPlayer>();
-                _firstPerson.SetActive(false);
+                _player = FindFirstObjectByType<MyPlayer>();
+                if (enterParams.IsVR)
+                {
+                    _player.gameObject.SetActive(true);
+                    _firstPerson.SetActive(false);
+                }
+                else
+                {
+                    _player.gameObject.SetActive(false);
+                    _firstPerson.SetActive(true);
+                }
             }
             else
             {
-                if (SteamVR.active)
-                {
-                    myPlayer = FindFirstObjectByType<MyPlayer>();
-                    myPlayer.gameObject.SetActive(false);
-                }
                 _firstPerson.SetActive(true);
             }
-            
-            
-            
             
             
             _firstPerson.SetActive(!enterParams.IsVR);
@@ -42,6 +44,11 @@ namespace VRnLit.Scripts.Gameplay
 
             var exitToResultsSignalSubj = new Subject<Unit>();
             _binder.Bind(exitToResultsSignalSubj);
+
+            exitToResultsSignalSubj.Subscribe(_ =>
+            {
+                _player.gameObject.SetActive(true);
+            });
             
             Debug.Log($"GAMEPLAY ENTRY POINT: save file name = , level to load = ");
             

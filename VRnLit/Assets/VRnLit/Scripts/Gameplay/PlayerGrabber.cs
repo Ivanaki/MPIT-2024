@@ -19,6 +19,7 @@ namespace VRnLit.Scripts.Gameplay
         private bool _isGrabbing = false;
         private Transform _cashedGrabObject = null;
         private ITake _cashedInterface = null;
+        private IBook _cashedBook = null;
         
         public void OnTake(InputValue value)
         {
@@ -34,6 +35,22 @@ namespace VRnLit.Scripts.Gameplay
             if (value.isPressed)
             {
                 Drop();
+            }
+        }
+        
+        public void OnLeft(InputValue value)
+        {
+            if (value.isPressed && _cashedBook != null)
+            {
+                _cashedBook.Left();
+            }
+        }
+        
+        public void OnRight(InputValue value)
+        {
+            if (value.isPressed && _cashedBook != null)
+            {
+                _cashedBook.Right();
             }
         }
 
@@ -54,18 +71,21 @@ namespace VRnLit.Scripts.Gameplay
                     _cashedGrabObject.parent = _grabParent;
                     _cashedGrabObject.localPosition = Vector3.zero;
                     _cashedGrabObject.localRotation = Quaternion.identity;
+
+                    hit.collider.TryGetComponent(out _cashedBook);
                     
-                    //move
                     
-                    //print(_cameraTransform.forward);
                 }
             }
         }
 
         private void Drop()
         {
-            _cashedInterface.Drop(); // kinematic
-            StartCoroutine(DropEnumerator());
+            if (_isGrabbing)
+            {
+                _cashedInterface.Drop(); // kinematic
+                StartCoroutine(DropEnumerator());
+            }
         }
         
         private IEnumerator DropEnumerator()
@@ -76,6 +96,7 @@ namespace VRnLit.Scripts.Gameplay
             _cashedInterface.AddVelocity(_cameraTransform.forward * _forwardCoof);
             _cashedInterface.AddVelocity(Vector3.up * _upCoof);
             
+            _cashedBook = null;
             _isGrabbing = false;
             _cashedInterface = null;
             _cashedGrabObject = null;
