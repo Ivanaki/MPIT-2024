@@ -10,7 +10,7 @@ public class Navedenie : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     [SerializeField] private Color _enterColor = new Color(1,1,1,0.03529412f);
     [SerializeField] private Color _exitColor = new Color(0,0,0,0);
 
-    private Image _image;
+    private Image _image = null;
     public bool _isChild { private get; set; } = false;
 
     private void Start()
@@ -18,20 +18,21 @@ public class Navedenie : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         _image = GetComponent<Image>();
         if(_childIfHas != null)
             _childIfHas._isChild = true;
+        _image.color = _exitColor;
     }
     
     public void OnPointerEnter(PointerEventData eventData = null)
     {
-        _image.color = _enterColor;
-        
+        if (_image != null) _image.color = _enterColor;
+
         if(_childIfHas != null && !_isChild)
             _childIfHas.OnPointerEnter();
     }
 
     public void OnPointerExit(PointerEventData eventData = null)
     {
-        _image.color = _exitColor;
-        
+        if (_image != null) _image.color = _exitColor;
+
         if(_childIfHas != null && !_isChild)
             _childIfHas.OnPointerExit();
     }

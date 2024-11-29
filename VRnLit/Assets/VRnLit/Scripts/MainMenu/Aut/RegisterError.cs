@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -7,6 +8,11 @@ namespace VRnLit.Scripts.MainMenu
     public class RegisterError : MonoBehaviour
     {
         [SerializeField] private TMP_Text _errorText;
+
+        private void Awake()
+        {
+            _errorText.gameObject.SetActive(false);
+        }
 
         public void ShowError(RegisterErrors registerErrors)
         {
