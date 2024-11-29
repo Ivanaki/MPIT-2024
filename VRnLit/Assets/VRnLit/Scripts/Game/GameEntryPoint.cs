@@ -2,10 +2,12 @@
 using BaCon;
 using PogruzhickURP.Scripts.Game;
 using PogruzhickURP.Scripts.Game.Params;
+using PogruzhickURP.Scripts.SaveLaod;
 using PogruzhickURP.Scripts.Utils;
 using R3;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using VRnLit.Scripts.Game;
 using VRnLit.Scripts.Game.Params;
 using VRnLit.Scripts.Gameplay;
 using VRnLit.Scripts.MainMenu;
@@ -30,10 +32,23 @@ namespace Electrical.Scripts._1Game
         {
             _coroutines = new GameObject("[COROUTINES]").AddComponent<Coroutines>();
             Object.DontDestroyOnLoad(_coroutines.gameObject);
+            
+            var save = new JsonToFileLoadSaveService();
+            _rootContainer.RegisterInstance<ILoadSaveService>(save);
+
+            _rootContainer.RegisterFactory(_ => new Account()).AsSingle();
+            //_rootContainer.RegisterFactory(_ => new CursorLocker()).AsSingle();
         }
 
         private void RunGame()
         {
+#if UNITY_EDITOR
+            if (SceneManager.GetActiveScene().name == Scenes.GAMEPLAY)
+            {
+                _coroutines.StartCoroutine(LoadAndStartAfterMainMenu(new MainMenuExitParams(new GameplayEnterParams(false))));
+                return;
+            }
+#endif
             _coroutines.StartCoroutine(LoadAndStartMainMenu());
         }
 

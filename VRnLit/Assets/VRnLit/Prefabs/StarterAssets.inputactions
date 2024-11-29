@@ -11,7 +11,8 @@
                     "id": "6bc1aaf4-b110-4ff7-891e-5b9fe6f32c4d",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Look",
@@ -19,15 +20,17 @@
                     "id": "2690c379-f54d-45be-a724-414123833eb4",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Jump",
                     "type": "Button",
                     "id": "8c4abdf8-4099-493a-aa1a-129acec7c3df",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Sprint",
@@ -35,7 +38,17 @@
                     "id": "980e881e-182c-404c-8cbf-3d09fdb48fef",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Take",
+                    "type": "Button",
+                    "id": "6fb1ecde-c5cc-4b40-aaab-d48ef1ce2afd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -212,6 +225,45 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "25cb2e4f-42a8-431e-aae5-e3546bbabe25",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "Take",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Pause",
+            "id": "b78ffaaa-e37c-482f-b454-1a9fec2ab29a",
+            "actions": [
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "f07cd84c-8cd5-4a45-89d6-bdecec019044",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9572060c-30e4-49d8-aab7-76d5f532979e",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VRnLit.Scripts.MainMenu.Aut;
 
 namespace VRnLit.Scripts.MainMenu
 {
@@ -13,15 +15,26 @@ namespace VRnLit.Scripts.MainMenu
         [SerializeField] private Button _register;
         
         [SerializeField] private Authentication _auth;
+
+        [SerializeField] private RegisterError _registerError;
         
         private void Awake()
         {
             _register.onClick.AddListener(() =>
             {
-                _auth.RegisterUser(new UserData(_name.text, _email.text, _password.text));
+                if (_name.text == "" || _email.text == "" || _password.text == "")
+                {
+                    _registerError.ShowError(RegisterErrors.FillInAllFills);
+                    return;
+                }
+
+                if (!_auth.RegisterUser(new UserData(_name.text, _email.text, _password.text)))
+                {
+                    _registerError.ShowError(RegisterErrors.ThisNameOrEmailIsAlreadyRegistered);
+                }
             });
         }
-
+        
         public void ResetValues()
         {
             _name.text = "";

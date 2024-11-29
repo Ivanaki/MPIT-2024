@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VRnLit.Scripts.MainMenu.Aut;
 
 namespace VRnLit.Scripts.MainMenu
 {
@@ -21,6 +22,10 @@ namespace VRnLit.Scripts.MainMenu
             
             _enter.onClick.AddListener(() =>
             {
+                if (_name.text == "" || _password.text == "")
+                {
+                    StartCoroutine(ShowError());
+                }
                 if (!_auth.TryAuthenticate(_name.text, _password.text))
                 {
                     StartCoroutine(ShowError());

@@ -3,6 +3,7 @@ using MySteamVR;
 using PogruzhickURP.Scripts.Gameplay.Root;
 using R3;
 using UnityEngine;
+using Valve.VR;
 using VRnLit.Scripts.Game.Params;
 
 namespace VRnLit.Scripts.Gameplay
@@ -14,7 +15,27 @@ namespace VRnLit.Scripts.Gameplay
         
         public Observable<Unit> Run(DIContainer gameplayContainer, GameplayEnterParams enterParams)
         {
-            var player = FindFirstObjectByType<MyPlayer>();
+            //var cursorLocker = gameplayContainer.Resolve<CursorLocker>();
+            MyPlayer myPlayer = null;
+            
+            if (enterParams.IsVR)
+            {
+                myPlayer = FindFirstObjectByType<MyPlayer>();
+                _firstPerson.SetActive(false);
+            }
+            else
+            {
+                if (SteamVR.active)
+                {
+                    myPlayer = FindFirstObjectByType<MyPlayer>();
+                    myPlayer.gameObject.SetActive(false);
+                }
+                _firstPerson.SetActive(true);
+            }
+            
+            
+            
+            
             
             _firstPerson.SetActive(!enterParams.IsVR);
             //player.gameObject.SetActive(enterParams.IsVR);

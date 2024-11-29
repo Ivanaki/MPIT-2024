@@ -18,5 +18,11 @@ namespace VRnLit.Scripts.MainMenu
             _authenticationPanel.SetActive(false);
             _mainPanel.SetActive(true);
         }
+
+        public void ExitAccount()
+        {
+            _authenticationPanel.SetActive(true);
+            _mainPanel.SetActive(false);
+        }
     }
 }
