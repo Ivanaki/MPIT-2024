@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using VRnLit.Scripts.Gameplay.Tasks;
 
 namespace VRnLit.Scripts.Gameplay
 {
@@ -12,6 +13,8 @@ namespace VRnLit.Scripts.Gameplay
         [SerializeField] private GameObject _open;
         
         [SerializeField] private GameObject[] _gameObjects;
+
+        [SerializeField] private TaskSystem _taskSystem;
 
         private void Start()
         {
@@ -60,8 +63,15 @@ namespace VRnLit.Scripts.Gameplay
             }
         }
 
+        private bool _flag = true;
         private void UpdateAll()
         {
+            if (_bookId == _gameObjects.Length-1 && _flag)
+            {
+                _flag = false;
+                _taskSystem.End2();
+            }
+            
             print(_bookId);
             _gameObjects[_bookId].SetActive(true);
             if (_bookId-1 != -1)

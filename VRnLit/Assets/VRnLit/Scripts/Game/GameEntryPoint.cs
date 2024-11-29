@@ -36,7 +36,7 @@ namespace Electrical.Scripts._1Game
             var save = new JsonToFileLoadSaveService();
             _rootContainer.RegisterInstance<ILoadSaveService>(save);
 
-            _rootContainer.RegisterFactory(_ => new Account()).AsSingle();
+            _rootContainer.RegisterFactory(_ => new Account(save)).AsSingle();
             //_rootContainer.RegisterFactory(_ => new CursorLocker()).AsSingle();
         }
 
