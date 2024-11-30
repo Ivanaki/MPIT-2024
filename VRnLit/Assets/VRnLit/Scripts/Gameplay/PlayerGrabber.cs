@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -57,24 +58,32 @@ namespace VRnLit.Scripts.Gameplay
         private void Take()
         {
             //Debug.DrawRay(_cameraTransform.position,_cameraTransform.forward);
-            if (!_isGrabbing && Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out var hit, _distnce, _layerMask))
+            if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out var hit, _distnce, _layerMask))
             {
-                //print(1);
-                if (hit.collider.TryGetComponent(out ITake take))
+                if (!_isGrabbing)
                 {
-                    //print(2);
-                    _isGrabbing = true;
-                    _cashedInterface = take;
-                    _cashedGrabObject = hit.collider.transform;
-                    take.Take();
+                    //print(1);
+                    if (hit.collider.TryGetComponent(out ITake take))
+                    {
+                        //print(2);
+                        _isGrabbing = true;
+                        _cashedInterface = take;
+                        _cashedGrabObject = hit.collider.transform;
+                        take.Take();
 
-                    _cashedGrabObject.parent = _grabParent;
-                    _cashedGrabObject.localPosition = Vector3.zero;
-                    _cashedGrabObject.localRotation = Quaternion.identity;
+                        _cashedGrabObject.parent = _grabParent;
+                        _cashedGrabObject.localPosition = Vector3.zero;
+                        _cashedGrabObject.localRotation = Quaternion.identity;
 
-                    hit.collider.TryGetComponent(out _cashedBook);
-                    
-                    
+                        hit.collider.TryGetComponent(out _cashedBook);
+
+
+                    }
+                }
+
+                if (hit.collider.TryGetComponent(out IOpenDoor book))
+                {
+                    book.DoAction();
                 }
             }
         }
